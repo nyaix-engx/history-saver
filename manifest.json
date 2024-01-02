@@ -1,0 +1,24 @@
+{
+    "name": "Dynamic History Saver",
+    "version": "1.0",
+    "description": "Saves user browsing history dynamically using play, pause, and stop button",
+    "manifest_version": 3,
+    "action":{
+        "default_title":"DH",
+        "default_popup":"index.html"
+    },
+    "permissions": [
+        "history"
+      ],
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": ["script.js"]
+      }
+    ],
+    "background":{
+        "service_worker":"background.js"
+    }
+  }
