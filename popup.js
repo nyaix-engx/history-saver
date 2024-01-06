@@ -1,8 +1,8 @@
-const playButton = document.getElementById('playButton');
-const pauseButton = document.getElementById('pauseButton');
-const stopButton = document.getElementById('stopButton');
-const historyList = document.getElementById('historyList');
-const historyItemsUl = document.getElementById('historyItems');
+const playButton = document.getElementById("playButton");
+const pauseButton = document.getElementById("pauseButton");
+const stopButton = document.getElementById("stopButton");
+const historyList = document.getElementById("historyList");
+const historyItemsUl = document.getElementById("historyItems");
 
 // const updateHistoryList = (historyItems) => {
 //   historyItemsUl.innerHTML = '';
@@ -27,18 +27,20 @@ const historyItemsUl = document.getElementById('historyItems');
 //   }
 // };
 
-playButton.addEventListener('click', () => {
-  console.log("here")
-  chrome.runtime.sendMessage({ type: 'startSavingHistory' });
+playButton.addEventListener("click", () => {
+  console.log("here");
+  chrome.runtime.sendMessage({ type: "startSavingHistory" });
 });
 
-pauseButton.addEventListener('click', () => {
-  chrome.runtime.sendMessage({ type: 'pauseSavingHistory' });
+pauseButton.addEventListener("click", () => {
+  chrome.runtime.sendMessage({ type: "pauseSavingHistory" });
 });
 
-stopButton.addEventListener('click', () => {
-  chrome.runtime.sendMessage({ type: 'stopSavingHistory' });
-  historyList.innerHTML = '';
+stopButton.addEventListener("click", () => {
+  chrome.runtime.sendMessage({ type: "stopSavingHistory" }, (data) => {
+    console.log("Data", data);
+  });
+  historyList.innerHTML = "";
 });
 
 // chrome.runtime.onMessage.addListener((message) => {
