@@ -27,6 +27,8 @@ const historyItemsUl = document.getElementById("historyItems");
 //   }
 // };
 
+renderHistory();
+
 playButton.addEventListener("click", () => {
   console.log("here");
   chrome.runtime.sendMessage({ type: "startSavingHistory" });
@@ -37,11 +39,27 @@ pauseButton.addEventListener("click", () => {
 });
 
 stopButton.addEventListener("click", () => {
-  chrome.runtime.sendMessage({ type: "stopSavingHistory" }, (data) => {
-    console.log("Data", data);
+  chrome.runtime.sendMessage({ type: "stopSavingHistory" }, (response) => {
+    window.localStorage.setItem("userHistory", JSON.stringify(response.data));
   });
-  historyList.innerHTML = "";
 });
+
+function renderHistory() {
+  let userHistory = window.localStorage.getItem("userHistory");
+  console.log("userHistory", userHistory);
+  if (userHistory !== null) {
+    let arr = JSON.parse(userHistory);
+    if (arr.length > 0) {
+      let historyItem = document.getElementById("historyItems");
+
+      for (let i = 0; i < arr.length; i++) {
+        let listItem = document.createElement("li");
+        listItem.textContent = arr[i].title;
+        historyItem.appendChild(listItem);
+      }
+    }
+  }
+}
 
 // chrome.runtime.onMessage.addListener((message) => {
 //   if (message.type === 'historyUpdated') {
